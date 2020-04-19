@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from .qa.views import test
+from ask.qa.views import test
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
