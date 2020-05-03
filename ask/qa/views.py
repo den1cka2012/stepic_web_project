@@ -12,9 +12,6 @@ def login(request, *args, **kwargs):
 def signup(request, *args, **kwargs):
     return HttpResponse('OK')
 
-def question(request, *args, **kwargs):
-    return HttpResponse('OK')
-
 def ask(request, *args, **kwargs):
     return HttpResponse('OK')
 
@@ -62,3 +59,10 @@ def qa_popular_all(request):
 
     return render(request, 'questions_popular_list.html',
                   {'user': request.user, 'questions': page.object_list, 'paginator': paginator, 'page': page, })
+
+
+def question(request, id):
+    question = get_object_or_404(Question, pk=id)
+    answers = Answer.objects.filter(question=question)
+    return render(request, 'question.html',
+                  {'user': request.user, 'question': question, 'answers': answers})
