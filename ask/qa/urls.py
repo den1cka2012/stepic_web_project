@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^question/(?P<id>\d+)/', question, name='question'),
     url(r'^ask/', ask, name='ask'),
     url(r'^popular/', popular, name='popular'),
-    url(r'^popular/\?page=(?P<page>\d+)', qa_popular_all, name='popular')
+    url(r'^popular/\?page=(?P<page>\d+)', qa_popular_all, name='popular'),
     url(r'^new/', new, name='new'),
 ]
 
