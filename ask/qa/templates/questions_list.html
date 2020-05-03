@@ -6,15 +6,15 @@
     </head>
 
     <body>
-      <a href="{% url 'login' %}"> Login </a> <br>
-      <a href="{% url 'signup' %}"> Signup </a> <br>
-      <a href="{% url 'ask' %}"> New question </a> <br>
-      <a href="{% url 'popular' %}"> Popular qa </a> <br>
-      {% if user.is_authenticated %}
-         {{ user.get_username }} is logging in  <br>
-      {% else %}
-         User is logout <br>
-      {% endif %}
+      <!--<a href="{% url 'login' %}"> Login </a> <br>-->
+      <!--<a href="{% url 'signup' %}"> Signup </a> <br>-->
+      <!--<a href="{% url 'ask' %}"> New question </a> <br>-->
+      <!--<a href="{% url 'popular' %}"> Popular qa </a> <br>-->
+      <!--{% if user.is_authenticated %}-->
+         <!--{{ user.get_username }} is logging in  <br>-->
+      <!--{% else %}-->
+         <!--User is logout <br>-->
+      <!--{% endif %}-->
 
       Pages: &nbsp;
       {% for p in paginator.page_range %}
