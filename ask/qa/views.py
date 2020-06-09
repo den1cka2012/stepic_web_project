@@ -1,17 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from qa.models import Question, Answer
-from qa.forms import AskForm, AnswerForm
+from qa.forms import AskForm, AnswerForm, SignupForm, LoginForm
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth import authenticate, login, logout
 
 def test(request, *args, **kwargs):
-    return HttpResponse('OK')
-
-def login(request, *args, **kwargs):
-    return HttpResponse('OK')
-
-def signup(request, *args, **kwargs):
     return HttpResponse('OK')
 
 def ask(request, *args, **kwargs):
@@ -93,3 +88,40 @@ def answer_add(request):
             # url = post.get_url()
             return HttpResponseRedirect(reverse('question', args=[post.question.id]))
     return HttpResponseRedirect('/')
+
+
+def signup_add(request):
+   #logger.debug(request)
+   if request.method == 'POST':
+      #logger.debug('signup_add:' + request.method)
+      form = SignupForm(request.POST)
+      #logger.debug('signup_add POST:' + request.POST['username'] + ',pass=' + request.POST['password']+ ',email=' + request.POST['email'])
+      if form.is_valid():
+        #logger.debug('signup_add form.is_valid:')
+        user = form.save()
+        if user is not None:
+          login(request,user)
+          #logger.debug('signup_add login')
+          return HttpResponseRedirect('/')
+
+   form = SignupForm()
+   return render(request, 'signup.html', {'form': form,})
+
+
+def login_add(request):
+   #logger.debug(request)
+   if request.method == 'POST':
+     #logger.debug('login_add:' + request.method)
+     form = LoginForm(request.POST)
+     #logger.debug('login_add POST:' + request.POST['username'] + ',pass=' + request.POST['password'])
+     if form.is_valid():
+         #logger.debug('login_add form.is_valid:')
+         user = form.save()
+         if user is not None:
+           logout(request)
+           login(request,user)
+           #logger.debug('login_add login')
+           return HttpResponseRedirect('/')
+
+   form = LoginForm()
+   return render(request, 'login.html', {'form': form,})

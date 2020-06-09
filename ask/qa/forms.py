@@ -58,3 +58,54 @@ class AnswerForm(forms.Form):
         post = Answer(**self.cleaned_data)
         post.save()
         return post
+
+
+class SignupForm(forms.Form):
+    username = forms.CharField(max_length=255)
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_username(self):
+        text = self.cleaned_data['username']
+        if text.strip() == '':
+            raise forms.ValidationError(u'User name is empty', code=12)
+        return text
+
+    def clean_password(self):
+        text = self.cleaned_data['password']
+        if text.strip() == '':
+            raise forms.ValidationError(u'Password is empty', code=12)
+        return text
+
+    def clean_email(self):
+        text = self.cleaned_data['email']
+        if text.strip() == '':
+            raise forms.ValidationError(u'Email is empty', code=12)
+        return text
+
+    def save(self):
+        user = User.objects.create_user(**self.cleaned_data)
+        user.save()
+        auth = authenticate(**self.cleaned_data)
+        return auth
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=255)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_username(self):
+        text = self.cleaned_data['username']
+        if text.strip() == '':
+            raise forms.ValidationError(u'User name is empty', code=12)
+        return text
+
+    def clean_password(self):
+        text = self.cleaned_data['password']
+        if text.strip() == '':
+            raise forms.ValidationError(u'Password is empty', code=12)
+        return text
+
+    def save(self):
+        user = authenticate(**self.cleaned_data)
+        return user
